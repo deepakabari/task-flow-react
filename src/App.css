@@ -1,0 +1,228 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  background-attachment: fixed;
+  color: #fff;
+}
+
+.app {
+  padding: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 40px;
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+}
+
+.board {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 20px;
+  align-items: flex-start;
+  flex: 1;
+}
+
+/* Hide horizontal scrollbar for a sleek look */
+.board::-webkit-scrollbar {
+  display: none;
+}
+.board {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.list {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  flex: 1;
+  min-width: 200px;
+  max-width: 360px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+/* Hide scrollbar for list internally to look cleaner */
+.list::-webkit-scrollbar {
+  display: none;
+}
+.list {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.list h3 {
+  margin: 0 0 20px 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+  transition: all 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.card h4 {
+  margin: 0 0 8px 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #f8fafc;
+}
+
+.card p {
+  margin: 0 0 16px 0;
+  font-size: 0.9rem;
+  color: #cbd5e1;
+  line-height: 1.5;
+}
+
+/* Edit Form Inputs */
+.card input {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 10px;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  width: 100%;
+  margin-bottom: 12px;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.card input:focus {
+  border-color: #a777e3;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* General Buttons */
+button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 14px;
+  border-radius: 6px;
+  color: #e2e8f0;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.02);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* Card Buttons */
+.card button {
+  display: inline-block;
+  margin-right: 8px;
+  background: rgba(255, 255, 255, 0.05);
+}
+.card button:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Add Task Button */
+.list > button {
+  width: 100%;
+  padding: 14px;
+  background: rgba(110, 142, 251, 0.15);
+  border: 1px dashed rgba(110, 142, 251, 0.6);
+  color: #c4a1ff;
+  margin-top: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.list > button:hover {
+  background: rgba(110, 142, 251, 0.25);
+  border-style: solid;
+  color: #e2d1ff;
+}
+
+/* Loading and Error states */
+.app > p {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #cbd5e1;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .app {
+    padding: 20px 12px;
+  }
+
+  h1 {
+    font-size: 2.2rem;
+    margin-bottom: 24px;
+  }
+
+  .board {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .list {
+    width: 100%;
+    min-width: 100%;
+    max-height: none;
+    overflow-y: visible;
+  }
+}
