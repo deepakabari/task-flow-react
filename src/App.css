@@ -1,5 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
+:root {
+  --bg-gradient: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  --text-color: #1e293b;
+  --heading-color: #0f172a;
+  --list-bg: rgba(255, 255, 255, 0.6);
+  --card-bg: rgba(255, 255, 255, 0.8);
+  --card-hover: rgba(255, 255, 255, 1);
+  --border-color: rgba(0, 0, 0, 0.1);
+  --input-bg: rgba(255, 255, 255, 0.9);
+  --input-text: #1e293b;
+  --btn-bg: rgba(0, 0, 0, 0.05);
+  --btn-hover: rgba(0, 0, 0, 0.1);
+}
+
+.app.dark {
+  --bg-gradient: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  --text-color: #cbd5e1;
+  --heading-color: #f1f5f9;
+  --list-bg: rgba(255, 255, 255, 0.05);
+  --card-bg: rgba(255, 255, 255, 0.08);
+  --card-hover: rgba(255, 255, 255, 0.12);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --input-bg: rgba(0, 0, 0, 0.3);
+  --input-text: #fff;
+  --btn-bg: rgba(255, 255, 255, 0.1);
+  --btn-hover: rgba(255, 255, 255, 0.2);
+}
+
 html, body, #root {
   margin: 0;
   padding: 0;
@@ -7,19 +35,20 @@ html, body, #root {
   height: 100vh;
   overflow: hidden;
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  background-attachment: fixed;
-  color: #fff;
 }
 
 .app {
   padding: 40px;
-  max-width: 1400px;
-  margin: 0 auto;
+  width: 100%;
   box-sizing: border-box;
   height: 100vh;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--text-color);
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 h1 {
@@ -36,6 +65,8 @@ h1 {
 
 .board {
   display: flex;
+  width: 100%;
+  max-width: 1400px;
   gap: 24px;
   overflow-x: auto;
   overflow-y: hidden;
@@ -54,10 +85,10 @@ h1 {
 }
 
 .list {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--list-bg);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 20px;
   flex: 1;
@@ -82,15 +113,15 @@ h1 {
   margin: 0 0 20px 0;
   font-size: 1.2rem;
   font-weight: 600;
-  color: #f1f5f9;
+  color: var(--heading-color);
   letter-spacing: 0.5px;
   text-transform: uppercase;
   text-align: center;
 }
 
 .card {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 12px;
@@ -99,29 +130,29 @@ h1 {
 
 .card:hover {
   transform: translateY(-3px);
-  background: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  background: var(--card-hover);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
 .card h4 {
   margin: 0 0 8px 0;
   font-size: 1.05rem;
   font-weight: 600;
-  color: #f8fafc;
+  color: var(--heading-color);
 }
 
 .card p {
   margin: 0 0 16px 0;
   font-size: 0.9rem;
-  color: #cbd5e1;
+  color: var(--text-color);
   line-height: 1.5;
 }
 
 /* Edit Form Inputs */
 .card input {
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: white;
+  background: var(--input-bg);
+  border: 1px solid var(--border-color);
+  color: var(--input-text);
   padding: 10px;
   border-radius: 6px;
   font-family: inherit;
@@ -140,11 +171,11 @@ h1 {
 
 /* General Buttons */
 button {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--btn-bg);
+  border: 1px solid var(--border-color);
   padding: 8px 14px;
   border-radius: 6px;
-  color: #e2e8f0;
+  color: var(--heading-color);
   font-family: inherit;
   font-size: 0.85rem;
   font-weight: 500;
@@ -153,7 +184,7 @@ button {
 }
 
 button:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--btn-hover);
   transform: scale(1.02);
 }
 
@@ -165,10 +196,10 @@ button:active {
 .card button {
   display: inline-block;
   margin-right: 8px;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--btn-bg);
 }
 .card button:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--btn-hover);
 }
 
 /* Add Task Button */
@@ -193,11 +224,11 @@ button:active {
 .app > p {
   text-align: center;
   font-size: 1.2rem;
-  color: #cbd5e1;
-  background: rgba(0, 0, 0, 0.2);
+  color: var(--text-color);
+  background: var(--card-bg);
   padding: 20px;
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-color);
 }
 
 /* Responsive Design */
