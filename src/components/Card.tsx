@@ -1,16 +1,28 @@
 import { useState } from "react"
+import { useDispatch } from "react-redux"
+import { deleteTask, editTask } from "../store/tasksSlice"
 
 type CardProps = {
   title: string
   description: string
-  onDelete: () => void
-  onEdit: (updatedTask: { title: string; description: string }) => void
+  listId: number
+  taskId: string
 }
 
-function Card({ title, description, onDelete, onEdit }: CardProps) {
+function Card({ title, description, listId, taskId }: CardProps) {
+  const dispatch = useDispatch()
   const [isEditing, setIsEditing] = useState(false)
   const [editTitle, setEditTitle] = useState(title)
   const [editDescription, setEditDescription] = useState(description)
+
+  const handleDelete = () => {
+    dispatch(deleteTask({ listId, taskId }))
+  }
+
+  const handleEdit = () => {
+    dispatch(editTask({ listId, taskId, updates: { title: editTitle, description: editDescription } }))
+    setIsEditing(false)
+  }
 
   return isEditing ? (
     <div className="card">
@@ -18,8 +30,7 @@ function Card({ title, description, onDelete, onEdit }: CardProps) {
       <input type="text" value={editDescription} onChange={(e) => setEditDescription(e.target.value)} />
       <button
         onClick={() => {
-          onEdit({ title: editTitle, description: editDescription })
-          setIsEditing(false)
+          handleEdit()
         }}
       >
         Save
@@ -47,7 +58,7 @@ function Card({ title, description, onDelete, onEdit }: CardProps) {
       >
         Edit
       </button>
-      <button onClick={onDelete}>Delete</button>
+      <button onClick={handleDelete}>Delete</button>
     </div>
   )
 }
