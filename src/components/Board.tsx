@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react"
 import List from "./List"
-import { fetchLists, type List as ListType } from "../api/tasks"
+import { fetchLists } from "../api/tasks"
+import { useDispatch, useSelector } from "react-redux"
+import type { RootState } from "../store/store"
+import { setLists } from "../store/tasksSlice"
 
 function Board() {
-  const [lists, setLists] = useState<ListType[]>([])
+  // subscribe to whole tasks slice
+  const lists = useSelector((state: RootState) => state.tasks)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const fetchListsData = async () => {
@@ -13,7 +18,7 @@ function Board() {
         setIsLoading(true)
         setError(null)
         const data = await fetchLists()
-        setLists(data)
+        dispatch(setLists(data))
       } catch (err) {
         console.error("Error fetching lists", err)
         setError(err instanceof Error ? err.message : "An unexpected error occurred")
@@ -22,40 +27,7 @@ function Board() {
       }
     }
     fetchListsData()
-  }, [])
-
-  function handleAddTask(listId: number) {
-    const newTask = {
-      id: crypto.randomUUID(),
-      title: "New Task",
-      description: "Add a description",
-    }
-    setLists((prevLists) =>
-      prevLists.map((list) => (list.id === listId ? { ...list, tasks: [...list.tasks, newTask] } : list)),
-    )
-  }
-
-  function handleDeleteTask(listId: number, taskId: string) {
-    setLists((prevLists) =>
-      prevLists.map((list) =>
-        list.id === listId ? { ...list, tasks: list.tasks.filter((task) => task.id !== taskId) } : list,
-      ),
-    )
-  }
-
-  function handleEditTask(
-    listId: number,
-    taskId: string,
-    { title, description }: { title: string; description: string },
-  ) {
-    setLists((prevLists) =>
-      prevLists.map((list) =>
-        list.id === listId
-          ? { ...list, tasks: list.tasks.map((task) => (task.id === taskId ? { ...task, title, description } : task)) }
-          : list,
-      ),
-    )
-  }
+  }, [dispatch])
 
   if (isLoading) {
     return <p>Loading Board...</p>
@@ -72,11 +44,7 @@ function Board() {
           key={list.id}
           name={list.name}
           tasks={list.tasks}
-          onAddTask={() => handleAddTask(list.id)}
-          onDeleteTask={(taskId) => handleDeleteTask(list.id, taskId)}
-          onEditTask={(taskId, { title, description }: { title: string; description: string }) =>
-            handleEditTask(list.id, taskId, { title, description })
-          }
+          listId={list.id}
         />
       ))}
     </div>

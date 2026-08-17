@@ -1,33 +1,30 @@
 import Card from "./Card"
-
-type Task = {
-  id: string
-  title: string
-  description: string
-}
+import type { Task } from "../api/tasks"
+import { useDispatch } from "react-redux"
+import { addTask } from "../store/tasksSlice"
 
 type ListProps = {
   name: string
   tasks: Task[]
-  onAddTask: () => void
-  onDeleteTask: (taskId: string) => void
-  onEditTask: (taskId: string, updatedTask: { title: string; description: string }) => void
+  listId: number
 }
 
-function List({ name, tasks, onAddTask, onDeleteTask, onEditTask }: ListProps) {
+function List({ name, tasks, listId }: ListProps) {
+  const dispatch = useDispatch()
+
+  const handleAddTask = () => {
+    dispatch(
+      addTask({ listId, task: { id: crypto.randomUUID(), title: "New Task", description: "Add a description" } }),
+    )
+  }
+
   return (
     <div className="list">
       <h3>{name}</h3>
       {tasks.map((task) => (
-        <Card
-          key={task.id}
-          title={task.title}
-          description={task.description}
-          onDelete={() => onDeleteTask(task.id)}
-          onEdit={(updatedTask) => onEditTask(task.id, updatedTask)}
-        />
+        <Card key={task.id} title={task.title} description={task.description} listId={listId} taskId={task.id} />
       ))}
-      <button onClick={onAddTask}>Add Task</button>
+      <button onClick={handleAddTask}>Add Task</button>
     </div>
   )
 }
