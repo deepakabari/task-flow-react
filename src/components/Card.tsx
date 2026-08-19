@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { memo, useState } from "react"
 import { useDispatch } from "react-redux"
 import { deleteTask, editTask } from "../store/tasksSlice"
 
@@ -7,20 +7,21 @@ type CardProps = {
   description: string
   listId: number
   taskId: string
+  boardId: string
 }
 
-function Card({ title, description, listId, taskId }: CardProps) {
+function Card({ title, description, listId, taskId, boardId }: CardProps) {
   const dispatch = useDispatch()
   const [isEditing, setIsEditing] = useState(false)
   const [editTitle, setEditTitle] = useState(title)
   const [editDescription, setEditDescription] = useState(description)
 
   const handleDelete = () => {
-    dispatch(deleteTask({ listId, taskId }))
+    dispatch(deleteTask({ boardId, listId, taskId }))
   }
 
   const handleEdit = () => {
-    dispatch(editTask({ listId, taskId, updates: { title: editTitle, description: editDescription } }))
+    dispatch(editTask({ boardId, listId, taskId, updates: { title: editTitle, description: editDescription } }))
     setIsEditing(false)
   }
 
@@ -63,4 +64,4 @@ function Card({ title, description, listId, taskId }: CardProps) {
   )
 }
 
-export default Card
+export default memo(Card)
