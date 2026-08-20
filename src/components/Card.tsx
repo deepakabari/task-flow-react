@@ -1,4 +1,4 @@
-import { memo, useState } from "react"
+import { memo, useEffect, useRef, useState } from "react"
 import { useDispatch } from "react-redux"
 import { deleteTask, editTask } from "../store/tasksSlice"
 
@@ -15,7 +15,14 @@ function Card({ title, description, listId, taskId, boardId }: CardProps) {
   const [isEditing, setIsEditing] = useState(false)
   const [editTitle, setEditTitle] = useState(title)
   const [editDescription, setEditDescription] = useState(description)
+  const titleInputRef = useRef<HTMLInputElement>(null)
 
+  useEffect(() => {
+    if (isEditing && titleInputRef.current) {
+      titleInputRef.current.focus()
+    }
+  }, [isEditing])
+  
   const handleDelete = () => {
     dispatch(deleteTask({ boardId, listId, taskId }))
   }
@@ -27,7 +34,7 @@ function Card({ title, description, listId, taskId, boardId }: CardProps) {
 
   return isEditing ? (
     <div className="card">
-      <input type="text" value={editTitle} onChange={(e) => setEditTitle(e.target.value)} />
+      <input ref={titleInputRef} type="text" value={editTitle} onChange={(e) => setEditTitle(e.target.value)} />
       <input type="text" value={editDescription} onChange={(e) => setEditDescription(e.target.value)} />
       <button
         onClick={() => {
