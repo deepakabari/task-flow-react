@@ -4,33 +4,22 @@ import { Link, Route, Routes } from "react-router-dom"
 import Dashboard from "./pages/Dashboard"
 import Profile from "./pages/Profile"
 import BoardPage from "./pages/BoardPage"
-import { useEffect, useState } from "react"
 import { fetchBoards } from "./api/tasks"
+import useFetch from "./hooks/useFetch"
+import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { setBoards } from "./store/tasksSlice"
 
 function App() {
+  const { data, isLoading, error } = useFetch(fetchBoards)
   const { theme, toggleTheme } = useTheme()
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const fetchBoardsData = async () => {
-      try {
-        setIsLoading(true)
-        setError(null)
-        const data = await fetchBoards()
-        dispatch(setBoards(data))
-      } catch (err) {
-        console.error("Error fetching boards", err)
-        setError(err instanceof Error ? err.message : "An unexpected error occurred")
-      } finally {
-        setIsLoading(false)
-      }
+    if (data) {
+      dispatch(setBoards(data))
     }
-    fetchBoardsData()
-  }, [dispatch])
+  }, [data, dispatch])
 
   return (
     <div className={`app ${theme}`}>
